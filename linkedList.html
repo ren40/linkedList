@@ -6,11 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 
 <body>
-
+    <header class="container">
+        <h1>LinkedList</h1>
+    </header>
+    <main>
+    </main>
 </body>
+<script src="https://unpkg.com/vue@next"></script>
 <script>
     class Node {
         constructor(data) {
@@ -45,6 +53,25 @@
             }
             this.tail = node
             this.length++;
+        }
+
+        add(value, index) {
+            let node = new Node(value)
+            let current = this.head
+            let previous = null
+            let count = 0
+
+            while (current) {
+                if (count + 1 === index) {
+                    previous = current
+                    current = current.next
+                    node.next = current
+                    previous.next = node
+                }
+                count++
+                current = current.next
+            }
+            this.length++
         }
 
         remove(value) {
@@ -121,6 +148,20 @@
             return false
         }
 
+        clear() {
+            while (this.length > 0) {
+                this.removeLast()
+            }
+        }
+
+        print() {
+            let currnet = this.head
+            while (currnet) {
+                console.log(`${currnet.data}`)
+                currnet = currnet.next
+            }
+        }
+
         isEmpty() {
             return this.length === 0
         }
@@ -132,16 +173,41 @@
         getLastElement() {
             return this.tail
         }
+
+        toArray() {
+            const nodes = []
+            let current = this.head
+            while (current) {
+                nodes.push(current.data)
+                current = current.next
+            }
+            return nodes
+        }
+
+        find(value) {
+            if (this.isEmpty()) {
+                return null
+            }
+
+            let current = this.head
+            while (current) {
+                if (current.data === value) {
+                    return current
+                }
+
+                current = current.next
+            }
+
+            return null
+        }
     }
 
     const list = new LinkedList()
-    list.push(12)
-    list.push(2213123)
-    list.push(12123213)
-    list.push(2323)
-    list.push(12123123)
-    list.push(2312312321)
-
+    list.push(1)
+    list.push(2)
+    list.push(3)
+    list.push(4)
+    console.log(list.toArray())
 
 </script>
 
